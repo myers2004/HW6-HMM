@@ -132,7 +132,6 @@ class HiddenMarkovModel:
             if curr_prob > max_prob:
                 max_prob = curr_prob
                 next_state_index = i
-        next_state_index = 0
 
         best_path_index.append(next_state_index)
         j = num_obs - 1
