@@ -166,9 +166,7 @@ class HiddenMarkovModel:
         best_path_index = []
 
         next_state_index = 0
-
-        print(viterbi_table)
-        print(paths_mat)
+        
         max_prob = -np.inf
         for i in range(num_states):
             curr_prob = viterbi_table[i][num_obs-1]
