@@ -2,6 +2,8 @@
 
 In this assignment, you'll implement the Forward and Viterbi Algorithms (dynamic programming). 
 
+[![Build Status](https://github.com/myers2004/HW6-HMM/actions/workflows/test.yml/badge.svg?event=push)](https://github.com/myers2004/HW6-HMM/actions/workflows/test.yml)
+
 
 # Assignment
 
@@ -42,24 +44,28 @@ Within your code, consider the scope of the inputs and how the different paramet
   * Any other edge cases you can think of?
   * Ensure that your code accomodates at least 2 possible edge cases. 
 
-Finally, please update your README with a brief description of your methods. 
+Finally, please update your README with a brief description of your methods.
 
+
+## Methods
+
+# Foward Algorithm
 
 
 ## Task List
 
 [TODO] Complete the HiddenMarkovModel Class methods  <br>
-  [ ] complete the `forward` function in the HiddenMarkovModelClass <br>
-  [ ] complete the `viterbi` function in the HiddenMarkovModelClass <br>
+  [X] complete the `forward` function in the HiddenMarkovModelClass <br>
+  [X] complete the `viterbi` function in the HiddenMarkovModelClass <br>
 
 [TODO] Unit Testing  <br>
-  [ ] Ensure functionality on mini and full weather dataset <br>
-  [ ] Account for edge cases 
+  [X] Ensure functionality on mini and full weather dataset <br>
+  [X] Account for edge cases 
 
 [TODO] Packaging <br>
   [ ] Update README with description of your methods <br>
-  [ ] pip installable module (optional)<br>
-  [ ] github actions (install + pytest) (optional)
+  [X] pip installable module (optional)<br>
+  [X] github actions (install + pytest) (optional)
 
 
 ## Completing the Assignment 
