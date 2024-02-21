@@ -26,6 +26,51 @@ class HiddenMarkovModel:
         self.prior_p= prior_p
         self.transition_p = transition_p
         self.emission_p = emission_p
+        
+        ##Error Handling
+
+        num_priors = np.shape(self.prior_p)[0]
+        num_hidden = len(self.hidden_states)
+        num_os = len(self.observation_states)
+
+        epsilon = 0.0000001
+
+        #Handling imput matrices of wrong dimension
+        if num_priors != num_hidden:
+            raise(IndexError('Number of prior probabilites does not match number of hideen states'))
+        
+        if np.shape(self.transition_p)[0] != num_hidden or np.shape(self.transition_p)[1] != num_hidden:
+            raise(IndexError('Dimensions of transition probability matrix do not match number of hidden states'))
+        
+        if np.shape(self.emission_p)[0] != num_hidden:
+            raise(IndexError('Number of columns of emission probability matrix do not match number of hidden states'))
+
+        if np.shape(self.emission_p)[1] != num_os:
+            raise(IndexError('Number of rows of emission probability matrix do not match number of observation states'))
+        
+        #Ensurng probabilites for each hidden state add to one
+
+        sum = 0
+        for i in range(num_priors):
+            sum+= self.prior_p[i]
+        if not np.isclose(sum,1,epsilon):
+            raise(ValueError('Prior probabilites don\'t sum to 1'))
+
+        for i in range(num_hidden):
+            sum = 0
+            for j in range(num_os):
+                sum += self.emission_p[i][j]
+            if not np.isclose(sum,1,epsilon):
+                raise(ValueError('Emission probabilites for a hidden state don\'t sum to 1'))
+
+        for i in range(num_hidden):
+            sum = 0
+            for j in range(num_hidden):
+                sum += self.transition_p[i][j]
+            if not np.isclose(sum,1,epsilon):
+                raise(ValueError('Transistion probabilites for a hidden state don\'t sum to 1'))
+
+
 
 
     def forward(self, input_observation_states: np.ndarray) -> float:
@@ -45,7 +90,7 @@ class HiddenMarkovModel:
         num_obs = len(input_observation_states)
         num_states = len(self.hidden_states)
 
-        alpha_mat = np.empty((num_states, num_obs))
+        alpha_mat = np.empty((num_states, num_obs)) #will hold all of the foward algorithm probabilities
 
        
         # Step 2. Calculate probabilities
@@ -70,7 +115,6 @@ class HiddenMarkovModel:
         final_prob = 0
         for i in range(num_states):
             final_prob += alpha_mat[i][num_obs-1]
-        
         return final_prob
         
 
@@ -94,9 +138,8 @@ class HiddenMarkovModel:
         
         #store probabilities of hidden state at each step 
         viterbi_table = np.zeros((num_states,num_obs))
-        #store best path for traceback
-        #best_path = np.zeros((num_obs))
-        #store the prev enrty
+
+        #store the prev enrty for traceback
         paths_mat = np.zeros((num_states,num_obs))
        
        # Step 2. Calculate Probabilities
@@ -140,7 +183,7 @@ class HiddenMarkovModel:
             best_path_index.append(next_state_index)
             j = j - 1
 
-        #convert index to states
+        #convert index to states and reverse the best path
         best_path = []
         for i in range(num_obs):
             best_path.append(self.hidden_states_dict[best_path_index[-i-1]])
