@@ -49,7 +49,14 @@ Finally, please update your README with a brief description of your methods.
 
 ## Methods
 
-# Foward Algorithm
+### Foward Algorithm
+
+The foward algorithm computes the probability of a given observation sequence occuring given the priors, transistion probabilites, and emission probabilites for the hidden states in a Hidden Markov Model. It goes step-by-step:
+
+Step 1)   Create a matrix with n rows and m columns, where n is the number of hidden
+          states, and m is the number of observations in the sequence.
+
+Step
 
 
 ## Task List
